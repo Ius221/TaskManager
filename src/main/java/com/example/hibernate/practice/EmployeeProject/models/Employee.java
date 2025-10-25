@@ -23,10 +23,10 @@ public class Employee {
     private String position;
     private double salary;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.PERSIST)
     private List<Task> task;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "department")
     private Department department;
 }
