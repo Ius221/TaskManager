@@ -9,4 +9,6 @@ public interface EmployeeService {
     public Employee showSingleEmployee(String id);
     public String saveSingleEmployee(Employee employee);
     public String saveSingleEmployeeInExistingDepartment(Employee employee, String departmentId);
+    public String saveSingleEmployeeInExistingTask(Employee employee, String taskId);
+
 }

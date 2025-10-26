@@ -6,6 +6,7 @@ import com.example.hibernate.practice.EmployeeProject.models.Employee;
 import com.example.hibernate.practice.EmployeeProject.models.Task;
 import com.example.hibernate.practice.EmployeeProject.repositories.DepartmentRepository;
 import com.example.hibernate.practice.EmployeeProject.repositories.EmployeeRepository;
+import com.example.hibernate.practice.EmployeeProject.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     @Autowired
     private DepartmentRepository departmentRepository;
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Override
     public List<Employee> showAllEmployee() {
@@ -53,6 +56,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setDepartment(fetchedDepartment);
 
         employeeRepository.save(employee);
+
+        return "Success";
+    }
+
+    @Override
+    public String saveSingleEmployeeInExistingTask(Employee employee, String taskId) {
+        Task fetchedTask =
+                taskRepository.findById(Long.parseLong(taskId)).orElseThrow(()-> new APIException("Can't " +
+                        "find task with id: "+taskId));
+
+
+
+        employee.setTask(List.of(fetchedTask));
+        employeeRepository.save(employee);
+
+        fetchedTask.setEmployee(employee);
+        taskRepository.save(fetchedTask);
 
         return "Success";
     }
