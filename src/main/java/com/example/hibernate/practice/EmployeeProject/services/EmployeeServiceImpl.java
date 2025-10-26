@@ -1,8 +1,10 @@
 package com.example.hibernate.practice.EmployeeProject.services;
 
 import com.example.hibernate.practice.EmployeeProject.exception.APIException;
+import com.example.hibernate.practice.EmployeeProject.models.Department;
 import com.example.hibernate.practice.EmployeeProject.models.Employee;
 import com.example.hibernate.practice.EmployeeProject.models.Task;
+import com.example.hibernate.practice.EmployeeProject.repositories.DepartmentRepository;
 import com.example.hibernate.practice.EmployeeProject.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     @Override
     public List<Employee> showAllEmployee() {
@@ -36,6 +40,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         } catch (Exception e) {
             throw new APIException("Failed to save the employee");
         }
+        return "Success";
+    }
+
+    @Override
+    public String saveSingleEmployeeInExistingDepartment(Employee employee, String departmentId) {
+
+        Department fetchedDepartment =
+                departmentRepository.findById(Long.parseLong(departmentId)).orElseThrow(()-> new APIException("Can't " +
+                        "find department with id: "+departmentId));
+
+        employee.setDepartment(fetchedDepartment);
+
+        employeeRepository.save(employee);
+
         return "Success";
     }
 

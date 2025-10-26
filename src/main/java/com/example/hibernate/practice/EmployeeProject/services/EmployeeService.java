@@ -8,4 +8,5 @@ public interface EmployeeService {
     public List<Employee> showAllEmployee();
     public Employee showSingleEmployee(String id);
     public String saveSingleEmployee(Employee employee);
+    public String saveSingleEmployeeInExistingDepartment(Employee employee, String departmentId);
 }

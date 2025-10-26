@@ -32,4 +32,10 @@ public class EmployeeController {
         String status = employeeService.saveSingleEmployee(employee);
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
+
+    @PostMapping("/api/public/department/employee/{id}")
+    public ResponseEntity<String> saveSingleEmployeeInExistingDepartment(@RequestBody Employee employee, @PathVariable String id) {
+        String status = employeeService.saveSingleEmployeeInExistingDepartment(employee,id);
+        return new ResponseEntity<>(status, HttpStatus.OK);
+    }
 }
