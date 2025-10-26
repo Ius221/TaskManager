@@ -1,5 +1,7 @@
 package com.example.hibernate.practice.EmployeeProject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,5 +25,6 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "employee")
+    @JsonBackReference
     private Employee employee;
 }

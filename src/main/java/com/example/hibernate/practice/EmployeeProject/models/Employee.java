@@ -1,5 +1,7 @@
 package com.example.hibernate.practice.EmployeeProject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +25,12 @@ public class Employee {
     private String position;
     private double salary;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "employee", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<Task> task;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "department")
+    @JsonBackReference
     private Department department;
 }

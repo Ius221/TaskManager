@@ -32,4 +32,18 @@ public class TaskController {
         String status = taskService.saveSingleTask(task);
         return new ResponseEntity<>(status, HttpStatus.FOUND);
     }
+
+    @PutMapping("/api/public/update/task/status/{id}")
+    public ResponseEntity<String> updateTask(@RequestBody Task task, @PathVariable String id) {
+        String status = taskService.updateTaskStatus(task,id);
+        return new ResponseEntity<>(status, HttpStatus.OK);
+    }
+
+    @PostMapping("/api/public/department/allTask/{id}")
+    public ResponseEntity<List<Task>> allTaskOfADepartment(@PathVariable String id){
+        List<Task> allTasks = taskService.allTaskOfADepartment(id);
+        return new ResponseEntity<>(allTasks, HttpStatus.OK);
+    }
+
+
 }
